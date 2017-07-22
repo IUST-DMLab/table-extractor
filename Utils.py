@@ -48,7 +48,6 @@ def get_kg_tuple(sub, prd, obj, src, version):
     kg_tuple['source'] = src
     kg_tuple['version'] = version
     kg_tuple['module'] = 'web_table_extractor'
-    kg_tuple['class'] = 'Professor'
     return kg_tuple
 
 
@@ -62,24 +61,25 @@ def generate_each_faculty_tuples(full_name, faculty, website, link, version,
                                  image=None, mail=None, address=None, phone=None, fax=None):
     faculty_tuples = list()
     if first_name:
-        faculty_tuples.append(get_kg_tuple(full_name, 'نام', first_name, link, version))
+        faculty_tuples.append(get_kg_tuple(full_name, 'foaf:givenName', first_name, link, version))
     if last_name:
-        faculty_tuples.append(get_kg_tuple(full_name, 'نام خانوادگی', last_name, link, version))
-    faculty_tuples.append(get_kg_tuple(full_name, 'دانشکده', faculty, link, version))
+        faculty_tuples.append(get_kg_tuple(full_name, 'foaf:familyName', last_name, link, version))
+    faculty_tuples.append(get_kg_tuple(full_name, 'fkgo:faculty', faculty, link, version))
     if group:
-        faculty_tuples.append(get_kg_tuple(full_name, 'گروه', group, link, version))
+        faculty_tuples.append(get_kg_tuple(full_name, 'fkgo:educationGroup', group, link, version))
     if grade:
-        faculty_tuples.append(get_kg_tuple(full_name, 'رتبه دانشگاهی', grade, link, version))
-    faculty_tuples.append(get_kg_tuple(full_name, 'website', website, link, version))
+        faculty_tuples.append(get_kg_tuple(full_name, 'fkgo:grade', grade, link, version))
+    faculty_tuples.append(get_kg_tuple(full_name, 'fkgo:website', website, link, version))
     if image:
-        faculty_tuples.append(get_kg_tuple(full_name, 'تصویر', image, link, version))
+        faculty_tuples.append(get_kg_tuple(full_name, 'fkgo:image', image, link, version))
     if mail:
-        faculty_tuples.append(get_kg_tuple(full_name, 'پست الکترونیکی', mail, link, version))
+        faculty_tuples.append(get_kg_tuple(full_name, 'fkgo:email', mail, link, version))
     if address:
-        faculty_tuples.append(get_kg_tuple(full_name, 'آدرس', address, link, version))
+        faculty_tuples.append(get_kg_tuple(full_name, 'fkgo:address', address, link, version))
     if phone:
-        faculty_tuples.append(get_kg_tuple(full_name, 'تلفن', phone, link, version))
+        faculty_tuples.append(get_kg_tuple(full_name, 'fkgo:phone', phone, link, version))
     if fax:
-        faculty_tuples.append(get_kg_tuple(full_name, 'فکس', fax, link, version))
+        faculty_tuples.append(get_kg_tuple(full_name, 'fkgo:fax', fax, link, version))
+    faculty_tuples.append(get_kg_tuple(full_name, 'rdf:instanceOf', 'fkgo:Professor', link, version))
 
     return faculty_tuples
