@@ -42,6 +42,7 @@ def tehran_university_faculties_extractor():
                                                (full_name, faculty, website, link, version,
                                                 first_name=first_name, last_name=last_name, grade=grade))
 
+    print(len(tehran_university_faculties))
     Utils.save_json(Config.resources_dir, Config.tehran_university_faculties_filename, tehran_university_faculties)
 
 
@@ -67,6 +68,7 @@ def ferdowsi_university_faculties_extractor():
                                                  (full_name, faculty, website, link, version,
                                                   first_name=first_name, last_name=last_name, group=group))
 
+    print(len(ferdowsi_university_faculties))
     Utils.save_json(Config.resources_dir, Config.ferdowsi_university_faculties_filename, ferdowsi_university_faculties)
 
 
@@ -105,11 +107,13 @@ def yazd_university_faculties_extractor():
                     faculty_data['phone'] = re.sub('\s+', '', td.get_text()).translate(trantab)
                 elif table_data_class == 'fax persianumber uk-text-truncate people-border-right':
                     faculty_data['fax'] = re.sub('\s+', '', td.get_text()).translate(trantab)
-            yazd_university_faculties.append(
+            yazd_university_faculties.extend(
                 Utils.generate_each_faculty_tuples(faculty_data['full_name'], faculty_data['faculty'],
                                                    faculty_data['website'], link, version, grade=faculty_data['grade'],
                                                    image=faculty_data['image'], mail=faculty_data['mail'],
                                                    address=faculty_data['address'], phone=faculty_data['phone'],
                                                    fax=faculty_data['fax']))
 
+    print(len(yazd_university_faculties))
+    print(Utils.number_of_faculties)
     Utils.save_json(Config.resources_dir, Config.yazd_university_faculties_filename, yazd_university_faculties)

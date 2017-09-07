@@ -8,6 +8,7 @@ from os.path import exists, join
 from bs4 import BeautifulSoup
 
 import Config
+number_of_faculties = 0
 
 
 def create_directory(directory, show_logging=False):
@@ -59,7 +60,10 @@ def convert_http_response_date_to_epoch_time(date):
 def generate_each_faculty_tuples(full_name, faculty, website, link, version,
                                  first_name=None, last_name=None, group=None, grade=None,
                                  image=None, mail=None, address=None, phone=None, fax=None):
+    global number_of_faculties
     faculty_tuples = list()
+    number_of_faculties += 1
+    faculty_tuples.append(get_kg_tuple(full_name, 'rdf:label', full_name, link, version))
     if first_name:
         faculty_tuples.append(get_kg_tuple(full_name, 'foaf:givenName', first_name, link, version))
     if last_name:
@@ -69,9 +73,9 @@ def generate_each_faculty_tuples(full_name, faculty, website, link, version,
         faculty_tuples.append(get_kg_tuple(full_name, 'fkgo:educationGroup', group, link, version))
     if grade:
         faculty_tuples.append(get_kg_tuple(full_name, 'fkgo:grade', grade, link, version))
-    faculty_tuples.append(get_kg_tuple(full_name, 'fkgo:website', website, link, version))
+    faculty_tuples.append(get_kg_tuple(full_name, 'foaf:homepage', website, link, version))
     if image:
-        faculty_tuples.append(get_kg_tuple(full_name, 'fkgo:image', image, link, version))
+        faculty_tuples.append(get_kg_tuple(full_name, 'fkgo:picture', image, link, version))
     if mail:
         faculty_tuples.append(get_kg_tuple(full_name, 'fkgo:email', mail, link, version))
     if address:
